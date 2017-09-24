@@ -18,7 +18,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='django-auth-graphene-jwt',
+    name='django-graphene-jwt',
     version='0.0.0',
     description='Django GraphQL JWT Authentication',
     long_description=long_description,
