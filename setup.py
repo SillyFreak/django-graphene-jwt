@@ -22,7 +22,7 @@ setup(
     version='0.0.0',
     description='Django GraphQL JWT Authentication',
     long_description=long_description,
-    #url="",
+    url="https://github.com/SillyFreak/django-graphene-jwt",
     author="Clemens Koza",
     author_email="koza@pria.at",
     license="AGPLv3+",
