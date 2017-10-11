@@ -12,11 +12,6 @@ That means that `djangorestframework-jwt's settings`_ are used.
 
 Some caveats and known issues:
 
-- This library uses ``DjangoObjectType`` for making users accessible via GraphQL.
-  This means that all ``User`` fields, in particular also hashed passwords, superuser status, etc., can be queried.
-  User objects are only provided when providing the correct password or a valid token, but still, this is bad!
-- The ``JWT_ALLOW_REFRESH`` property is not honored - token refresh is always possible;
-  as a workaround, ``JWT_REFRESH_EXPIRATION_DELTA`` can be set to a low value.
 - The ``JWTGraphQLView`` class is pretty ad-hoc;
   using the ``REST_FRAMEWORK.DEFAULT_AUTHENTICATION_CLASSES`` setting would probably be better.
   Also, there is no equivalent of ``DEFAULT_PERMISSION_CLASSES``.
