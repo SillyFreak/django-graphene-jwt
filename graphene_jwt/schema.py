@@ -8,20 +8,28 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth import authenticate, get_user_model
 from django.utils.translation import ugettext as _
-from rest_framework_jwt.settings import api_settings
+from rest_framework_jwt.settings import api_settings as api_settings_jwt
 from rest_framework_jwt.compat import get_username_field
+
+from graphene_jwt.settings import api_settings
 
 
 User = get_user_model()
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
-jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
+jwt_payload_handler = api_settings_jwt.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings_jwt.JWT_ENCODE_HANDLER
+jwt_decode_handler = api_settings_jwt.JWT_DECODE_HANDLER
+jwt_get_username_from_payload = api_settings_jwt.JWT_PAYLOAD_GET_USERNAME_HANDLER
 
 
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+        if api_settings.JWT_GRAPHENE_USER_ONLY_FIELDS is not None:
+            only_fields = api_settings.JWT_GRAPHENE_USER_ONLY_FIELDS
+        elif api_settings.JWT_GRAPHENE_USER_EXCLUDE_FIELDS is not None:
+            exclude_fields = api_settings.JWT_GRAPHENE_USER_EXCLUDE_FIELDS
+        else:
+            only_fields = ('username', 'first_name', 'last_name', 'email')
 
 
 class Login(graphene.Mutation):
@@ -110,7 +118,7 @@ class Refresh(graphene.Mutation):
 
         if orig_iat:
             # Verify expiration
-            refresh_limit = api_settings.JWT_REFRESH_EXPIRATION_DELTA
+            refresh_limit = api_settings_jwt.JWT_REFRESH_EXPIRATION_DELTA
 
             if isinstance(refresh_limit, timedelta):
                 refresh_limit = refresh_limit.days * 24 * 3600 + refresh_limit.seconds
