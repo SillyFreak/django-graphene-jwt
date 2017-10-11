@@ -12,8 +12,6 @@ That means that `djangorestframework-jwt's settings`_ are used.
 
 Some caveats and known issues:
 
-- The ``JWT_ALLOW_REFRESH`` property is not honored - token refresh is always possible;
-  as a workaround, ``JWT_REFRESH_EXPIRATION_DELTA`` can be set to a low value.
 - The ``JWTGraphQLView`` class is pretty ad-hoc;
   using the ``REST_FRAMEWORK.DEFAULT_AUTHENTICATION_CLASSES`` setting would probably be better.
   Also, there is no equivalent of ``DEFAULT_PERMISSION_CLASSES``.

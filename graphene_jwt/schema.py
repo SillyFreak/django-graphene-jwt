@@ -158,4 +158,5 @@ class Query(graphene.AbstractType):
 
 class Mutation(graphene.AbstractType):
     jwtLogin = Login.Field()
-    jwtRefresh = Refresh.Field()
+    if api_settings_jwt.JWT_ALLOW_REFRESH:
+        jwtRefresh = Refresh.Field()
